@@ -12,11 +12,19 @@ class Round {
   }
 
   takeTurn(guess) {
+    // after round 30, make sure turn has no current card
     const turn = new Turn(guess, this.returnCurrentCard());
     !turn.evaluateGuess() ? this.incorrectAnswers.push(this.returnCurrentCard().id) : null;
     this.turns++;
-    return turn.giveFeedback();
+    console.log(`You are on turn ${this.turns} / 30`)
+    if(this.turns === 30){
+      console.log(this.endRound());
+      return turn.giveFeedback()
+    } else {
+      return turn.giveFeedback();
+    }
   }
+
 
   calculatePercentCorrect() {
     const incorrect = this.incorrectAnswers.length;
