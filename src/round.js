@@ -5,6 +5,8 @@ class Round {
     this.deck = deck;
     this.turns = 0;
     this.incorrectAnswers = [];
+    this.startTime = new Date();
+    this.currentRound = 1;
   }
 
   returnCurrentCard() {
@@ -12,30 +14,35 @@ class Round {
   }
 
   takeTurn(guess) {
-    // after round 30, make sure turn has no current card
     const turn = new Turn(guess, this.returnCurrentCard());
-    !turn.evaluateGuess() ? this.incorrectAnswers.push(this.returnCurrentCard().id) : null;
+    if (!turn.evaluateGuess()) {
+      this.incorrectAnswers.push(this.returnCurrentCard().id)
+    }
     this.turns++;
     console.log(`You are on turn ${this.turns} / 30`)
-    if(this.turns === 30){
-      console.log(this.endRound());
-      return turn.giveFeedback()
-    } else {
-      return turn.giveFeedback();
+
+    return turn.giveFeedback();
+  }
+
+  calculatePercentCorrect() {
+    const incorrect = this.incorrectAnswers.length;
+    return Math.round((incorrect / this.turns) * 100);
+  }
+
+  endRound() {
+    const endTime = new Date();
+    const totalTime = Math.round((endTime - this.startTime) / 1000);
+      if (totalTime < 60) {
+        return `** Round over! ** You answered ${this.calculatePercentCorrect()}% of the questions correctly in ${totalTime} seconds!`;
+     }  else {
+        const totalMinutes = Math.round(totalTime / 60);
+        const s = totalMinutes === 1 ? '': 's';
+        return `** Round over! ** You answered ${this.calculatePercentCorrect()}% of the questions correctly in ${totalMinutes} minute${s}!`;
+     }
     }
   }
 
 
-  calculatePercentCorrect() {
-    const incorrect = this.incorrectAnswers.length;
-    return Math.round(incorrect / this.turns * 100);
-  }
-
-  endRound() {
-   return `** Round over! ** You answered ${this.calculatePercentCorrect()}% of the questions correctly!`
-  }
-
-}
 
 
 

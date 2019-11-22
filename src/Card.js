@@ -5,9 +5,6 @@ class Card {
     this.answers = obj.answers;
     this.correctAnswer = obj.correctAnswer;
   }
-
-
-
 }
 
-module.exports = Card
+module.exports = Card;
