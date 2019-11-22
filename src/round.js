@@ -6,7 +6,6 @@ class Round {
     this.turns = 0;
     this.incorrectAnswers = [];
     this.startTime = new Date();
-    this.currentRound = 1;
   }
 
   returnCurrentCard() {
@@ -32,19 +31,19 @@ class Round {
   endRound() {
     const endTime = new Date();
     const totalTime = Math.round((endTime - this.startTime) / 1000);
-      if (totalTime < 60) {
-        return `** Round over! ** You answered ${this.calculatePercentCorrect()}% of the questions correctly in ${totalTime} seconds!`;
-     }  else {
-        const totalMinutes = Math.round(totalTime / 60);
-        const s = totalMinutes === 1 ? '': 's';
-        return `** Round over! ** You answered ${this.calculatePercentCorrect()}% of the questions correctly in ${totalMinutes} minute${s}!`;
-     }
+    if (totalTime < 60) {
+      return `** Round over! ** You answered ${this.calculatePercentCorrect()}% of the questions correctly in ${totalTime} seconds!`;
+    }  else {
+      const totalMinutes = Math.round(totalTime / 60);
+      const s = totalMinutes === 1 ? '' : 's';
+      return `** Round over! ** You answered ${this.calculatePercentCorrect()}% of the questions correctly in ${totalMinutes} minute${s}!`;
     }
   }
+}
 
 
 
 
 
 
-  module.exports = Round;
+module.exports = Round;
